@@ -18,8 +18,8 @@ private:
 	void drawer();
 	size_t sensitivity;
 public:
-	int GetSize();
-	size_t GetSensitivity();
+	int GetSize() const;
+	size_t GetSensitivity() const;
 	void SetSensitivity(size_t sensitivity);
 	__declspec(property(get = GetSize)) int Size;  // Thanks Microsoft for this sugar
 	__declspec(property(get = GetSensitivity, put = SetSensitivity)) size_t Sensitivity;

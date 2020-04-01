@@ -111,7 +111,7 @@ public:
 			KoSTL::vector<Shape*> tmp;
 			for (auto c = disp->Size - 1; c > disp->Size - params[0] - 1; c--)
 				tmp.push_back(disp->Shapes[c]);
-			auto start_index = disp->Size - 1;
+			const auto start_index = disp->Size - 1;
 			for (auto c = start_index; c > start_index - params[0]; c--)
 				disp->Shapes.erase(c);
 			tmp.shrink_to_fit();
@@ -132,11 +132,11 @@ void Displayer::drawer() {
 }
 #pragma endregion
 
-int Displayer::GetSize() {
+int Displayer::GetSize() const {
 	return Shapes.size();
 }
 
-size_t Displayer::GetSensitivity() {
+size_t Displayer::GetSensitivity() const {
 	return sensitivity;
 }
 
@@ -280,7 +280,7 @@ void Displayer::DrawField(std::string file_path, bool redraw_shapes) {  // Draws
 	std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	this_thread::sleep_for(chrono::milliseconds(50));
 	graphics->DrawRectangle(&Pen(Color(255, 255, 0, 0)), 0, 0, 767, 431);
-	if (File_path != "") {
+	if (!File_path.empty()) {
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
 		cout << "File path: " << File_path << endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
@@ -326,7 +326,7 @@ void Displayer::Read(string& file_path) {
 		file.open(file_path, fstream::in);
 	}
 	catch (...) {
-		cout << (char)7 << "Didn't manage to open file!";
+		cout << static_cast<char>(7) << "Didn't manage to open file!";
 		return;
 	}
 	static const std::regex regular("(\\d){1,}");  // I just was too lazy to make my own function that splits a string so I decided to use regular expressions.
@@ -362,7 +362,7 @@ void Displayer::Write(string& file_path) {
 		file.open(file_path, fstream::out);
 	}
 	catch (...) {
-		cout << (char)7 << "Didn't manage to open the file";
+		cout << static_cast<char>(7) << "Didn't manage to open the file";
 		return;
 	}
 	for (auto shape : Shapes)

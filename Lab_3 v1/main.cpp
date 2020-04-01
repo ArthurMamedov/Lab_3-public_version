@@ -35,7 +35,7 @@ KoSTL::vector<const char*> list_of_shapes {
 int menu(const vector<const char*> &words, int color = 10) {
 	std::system("cls");
 	int number = words.size();
-	int selected = 1;
+	auto selected = 1;
 	char key{};
 	COORD k; k.X = 0; k.Y = 0;
 	auto hnd = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -202,7 +202,7 @@ int main(int argc, char** argv) {
 	HDC hdc = GetDC(hWnd);
 	Graphics graphics(hdc);
 	
-	string file = "";
+	string file;
 	if (argc > 1)
 		file = argv[1];
 
@@ -212,7 +212,7 @@ int main(int argc, char** argv) {
 	if(argc >= 1)
 		disp.Read(file);
 	disp.DrawField(file);
-	int index = -1, figure_number = disp.Size, shape_number = 0;
+	auto index = -1, figure_number = disp.Size, shape_number = 0;
 	while (true) {
 		char switcher = _getch();
 		switch (switcher) {
@@ -275,7 +275,4 @@ int main(int argc, char** argv) {
 		default: break;
 		}
 	}
-	if (!gdiplusToken)
-		GdiplusShutdown(gdiplusToken);
-	return 0;
 }

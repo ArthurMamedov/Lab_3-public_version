@@ -62,7 +62,8 @@ bool cRectangle::IsScalePossible(double coefficient) {
 
 void cRectangle::_scale(double coefficient) {
 	Hide();
-	int SaveWidth = Width, SaveHeight = Height;
+	const int SaveWidth = Width;
+	const int SaveHeight = Height;
 	Width = static_cast<int>(Width * coefficient);
 	Height = static_cast<int>(Height * coefficient);
 	_move(UpLeftX + (SaveWidth - Width) / 2, UpLeftY + (SaveHeight - Height) / 2, true);

@@ -2,14 +2,15 @@
 
 bool cTriangle::IsMovePossible(int dx, int dy, bool mode) {
 	if (!mode) {
-		bool outcome = true;
+		auto outcome = true;
 		for (short c = 0; c < 3 and outcome; c++) {
 			outcome = outcome && (Points[c].X + dx > 0) && (Points[c].X + dx < 767) && (Points[c].Y + dy > 0) && (Points[c].Y + dy < 431);
 		} return outcome;
 	}
 	else {
-		bool outcome = (dx > 0) && (dx < 767) && (dy > 0) && (dy < 431);
-		int offsetX = -Points[0].X + dx, offsetY = -Points[0].Y + dy;
+		auto outcome = (dx > 0) && (dx < 767) && (dy > 0) && (dy < 431);
+		const auto offsetX = -Points[0].X + dx;
+		auto offsetY = -Points[0].Y + dy;
 		for (short c = 1; c < 3 and outcome; c++) {
 			outcome = outcome && (Points[c].X + offsetX < 767) && (Points[c].X + offsetX > 0) && (Points[c].Y + offsetY < 431) && (Points[c].X + offsetX > 0);
 		} return outcome;
@@ -21,13 +22,14 @@ void cTriangle::_move(int dx, int dy, bool mode) {
 		Trace.push_back(Center);
 	Hide();
 	if (!mode) {
-		for (short c = 0; c < 3; c++) {
-			Points[c].X += dx;
-			Points[c].Y += dy;
+		for (auto& Point : Points) {
+			Point.X += dx;
+			Point.Y += dy;
 		}
 	} 
 	else {
-		int offsetX = -Points[0].X + dx, offsetY = -Points[0].Y + dy;
+		const auto offsetX = -Points[0].X + dx;
+		const auto offsetY = -Points[0].Y + dy;
 		Points[0].X = dx;
 		Points[0].Y = dy;
 		for (short c = 1; c < 3; c++) {
@@ -43,7 +45,7 @@ void cTriangle::_move(int dx, int dy, bool mode) {
 
 bool cTriangle::IsScalePossible(double coefficient)
 {
-	bool outcome = true;
+	auto outcome = true;
 	const auto averageX = (Points[0].X + Points[1].X + Points[2].X) / 3;
 	const auto averageY = (Points[0].Y + Points[1].Y + Points[2].Y) / 3;
 	const auto offsetX = averageX - averageX * coefficient;
@@ -65,9 +67,9 @@ void cTriangle::_scale(double coefficient) {
 	const auto offsetX = averageX - averageX * coefficient;
 	const auto offsetY = averageY - averageY * coefficient;
 	Hide();
-	for (short c = 0; c < 3; c++) {
-		Points[c].X = static_cast<int>(Points[c].X * coefficient);
-		Points[c].Y = static_cast<int>(Points[c].Y * coefficient);
+	for (auto& Point : Points) {
+		Point.X = static_cast<int>(Point.X * coefficient);
+		Point.Y = static_cast<int>(Point.Y * coefficient);
 	}
 	Move(offsetX, offsetY, false);
 }
@@ -99,10 +101,10 @@ cTriangle::cTriangle(Graphics& graph, int x, int y, int x2, int y2, int x3, int 
 
 void cTriangle::Write(ofstream& file) {
 	file << triangle;
-	for (size_t c = 0; c < 3; c++)
-		file << ' ' << Points[c].X << ' ' << Points[c].Y;
-	for (size_t c = 0; c < 3; c++)
-		file << ' ' << DefaultPoints[c].X << ' ' << DefaultPoints[c].Y;
+	for (auto& Point : Points)
+		file << ' ' << Point.X << ' ' << Point.Y;
+	for (auto& DefaultPoint : DefaultPoints)
+		file << ' ' << DefaultPoint.X << ' ' << DefaultPoint.Y;
 	Shape::Write(file);
 }
 
@@ -119,7 +121,7 @@ void cTriangle::Reset() {
 }
 
 Point cTriangle::GetCenter() {
-	auto centerX = (Points[0].X + Points[1].X + Points[2].X) / 3;
-	auto centerY = (Points[0].Y + Points[1].Y + Points[2].Y) / 3;
+	const auto centerX = (Points[0].X + Points[1].X + Points[2].X) / 3;
+	const auto centerY = (Points[0].Y + Points[1].Y + Points[2].Y) / 3;
 	return Point(centerX, centerY);
 }
