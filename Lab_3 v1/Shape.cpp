@@ -68,18 +68,18 @@ void Shape::Disable() {
 
 ///Changed color to new one
 void Shape::ChangeColor(Color newColor) {
-	if (enabled) <%
+	if (enabled) {
 		color = newColor;
 		Draw();
 		if (ShowTrace)
 			DrawTrace();
-	%>
+	}
 }
 
 ///Moves the shape if enabled
 void Shape::Move(int dx, int dy, bool mode) {
 	if (!enabled) return;
-	bool IsPossible = IsMovePossible(dx, dy, mode);
+	const bool IsPossible = IsMovePossible(dx, dy, mode);
 	if (IsPossible)
 		_move(dx, dy, mode);
 	else Draw();
@@ -94,15 +94,15 @@ void Shape::Scale(double coefficient) {
 
 ///Writing to a file
 void Shape::Write(ofstream& file) {
-	file << ' ' << (int)color.GetA()
-		 << ' ' << (int)color.GetR()
-		 << ' ' << (int)color.GetG()
-		 << ' ' << (int)color.GetB()
+	file << ' ' << static_cast<int>(color.GetA())
+		 << ' ' << static_cast<int>(color.GetR())
+		 << ' ' << static_cast<int>(color.GetG())
+		 << ' ' << static_cast<int>(color.GetB())
 		 << ' ' << ShowTrace
-		 << ' ' << (int)DefaultColor.GetA() 
-		 << ' ' << (int)DefaultColor.GetR()
-		 << ' ' << (int)DefaultColor.GetG()
-		 << ' ' << (int)DefaultColor.GetB()
+		 << ' ' << static_cast<int>(DefaultColor.GetA()) 
+		 << ' ' << static_cast<int>(DefaultColor.GetR())
+		 << ' ' << static_cast<int>(DefaultColor.GetG())
+		 << ' ' << static_cast<int>(DefaultColor.GetB())
 		 << ' ' << DefaultShowTrace 
 		 << ' ' << enabled << '\n';
 }

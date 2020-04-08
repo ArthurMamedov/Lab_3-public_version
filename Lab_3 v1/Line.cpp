@@ -38,24 +38,24 @@ void cLine::_move(int dx, int dy, bool mode) {
 }
 
 bool cLine::IsScalePossible(double coefficient) {
-	Point current_center((StartX + EndX) / 2, (StartY + EndY) / 2);
+	const Point current_center((StartX + EndX) / 2, (StartY + EndY) / 2);
 	Point A(static_cast<int>(StartX * coefficient), static_cast<int>(StartY * coefficient));
 	Point B(static_cast<int>(EndX * coefficient), static_cast<int>(EndY * coefficient));
-	Point AB_center((A.X + B.X) / 2, (A.Y + B.Y) / 2);
-	int offsetX = current_center.X - AB_center.X;
-	int offsetY = current_center.Y - AB_center.Y;
+	const Point AB_center((A.X + B.X) / 2, (A.Y + B.Y) / 2);
+	const int offsetX = current_center.X - AB_center.X;
+	const int offsetY = current_center.Y - AB_center.Y;
 	A.X += offsetX; A.Y += offsetY; B.X += offsetX; B.Y += offsetY;
 	return A.X - 5 > 0 and A.Y - 5 > 0 and A.X + 5 < 767 and A.Y + 5 < 431 and
 		B.X - 5 > 0 and B.Y - 5 > 0 and B.X + 5 < 767 and B.Y + 5 < 431 and (coefficient >= 1 or pow(StartX - EndX, 2) + pow(StartY - EndY, 2) >= 121);
 }
 
 void cLine::_scale(double coefficient) {
-	Point current_center((StartX + EndX) / 2, (StartY + EndY) / 2);
+	const Point current_center((StartX + EndX) / 2, (StartY + EndY) / 2);
 	Point A(static_cast<int>(StartX * coefficient), static_cast<int>(StartY * coefficient));
 	Point B(static_cast<int>(EndX * coefficient), static_cast<int>(EndY * coefficient));
-	Point AB_center((A.X + B.X) / 2, (A.Y + B.Y) / 2);
-	int offsetX = current_center.X - AB_center.X;
-	int offsetY = current_center.Y - AB_center.Y;
+	const Point AB_center((A.X + B.X) / 2, (A.Y + B.Y) / 2);
+	const int offsetX = current_center.X - AB_center.X;
+	const int offsetY = current_center.Y - AB_center.Y;
 	A.X += offsetX; A.Y += offsetY; B.X += offsetX; B.Y += offsetY;
 	Hide();
 	StartX *= coefficient; StartY *= coefficient;
